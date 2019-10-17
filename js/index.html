@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>JavaScript Tutorial - Rocketseat</title>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" name="name" id="name" />
+            <input type="text" name="nam2" id="name" />
+            <button class="button">Add</button>
+        </div>
+
+        <script>
+            // var inputElement = document.getElementById('name');
+            // var inputElement = document.getElementsByTagName('input')[0];
+            // var inputElement = document.getElementsByClassName('button')[0];
+            var inputElement = document.querySelector('div#app input');
+            var inputElement2 = document.querySelector('input[name=name]');
+            var inputElement3 = document.querySelectorAll('input');
+            console.log(inputElement, inputElement2, inputElement3);
+
+            var btnElement = document.querySelector('button.button');
+            btnElement.onclick = function () { alert('button clicked') };
+
+
+            var linkElement = document.createElement('a');
+            linkElement.setAttribute('href', 'http://rocketseat.com.br');
+            linkElement.setAttribute('title', 'Rocketset\'s Website');
+
+            var textElement = document.createTextNode('Access Rocketseat\'s website.');
+
+            linkElement.appendChild(textElement);
+
+            var containerElement = document.querySelector('#app');
+            containerElement.appendChild(linkElement);
+            containerElement.removeChild(inputElement2);
+
+        </script>
+    </body>
+</html>

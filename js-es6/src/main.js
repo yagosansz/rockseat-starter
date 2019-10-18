@@ -1,102 +1,92 @@
-// Delay function will trigger .then after 1s
-const delay = () => new Promise(resolve => setTimeout(resolve, 1000));
+import api from './api';
 
-// function oneSecond() {
-//     delay().then(() => {
-//         console.log('1s');
+class App {
+    constructor() {
+        this.repositories= [];
 
-//         delay().then(() => {
-//             console.log('2s');
+        this.formElement = document.getElementById('repo-form');
+        this.inputElement = document.querySelector('input[name=repository]');
+        this.listElement = document.getElementById('repo-list');
 
-//             delay().then(() => {
-//                 console.log('3s');
-        
-//             });
-//         });
-//     });
-// }
-
-async function oneSecond() {
-    await delay();
-    console.log('1s');
-    await delay();
-    console.log('2s');
-    await delay();
-    console.log('3s');
-}
-
-oneSecond();
-
-import axios from 'axios';
-
-// function getUserFromGithub(user) {
-//     axios.get(`https://api.github.com/users/${user}`)
-//         .then(response => {
-//             console.log(response.data);
-//         })
-//         .catch(err => {
-//             console.warn('User couldn\'t be found!');
-//         })
-// }
-
-async function getUserFromGithub(user) {
-    try {
-        const response = await axios.get(`https://api.github.com/users/${user}`);
-        console.log(response.data);
-    } catch(err) {
-        console.warn('User couldn\'t be found!');
+        this.registerHandlers();
     }
-}
 
-getUserFromGithub('yagosansz');
-getUserFromGithub('yagosBBBBansz');
+    registerHandlers() {
+        this.formElement.onsubmit = (event) => this.addRepository(event);
+    }
 
-// class Github {
-//     static getRepositories(repo) {
-//         axios.get(`https://api.github.com/repos/${repo}`)
-//             .then(response => {
-//                 console.log(response.data);
-//             })
-//             .catch(err => {
-//                 console.log('Repo couldn\'t be found!');
-//             })
-//     }
-// }
+    setLoading(loading = true) {
+        if(loading === true) {
+            let loadingElement = document.createElement('span')
+            loadingElement.appendChild(document.createTextNode('Loading...'));
+            loadingElement.setAttribute('id', 'loading');
+            loadingElement.setAttribute('style', 'display: block');
 
-class Github {
-    static async getRepositories(repo) {
-        try {
-            const repo = await axios.get(`https://api.github.com/repos/${repo}`);
-            console.log(response.data);
-        } catch(err) {
-            console.log('Repo couldn\'t be found!');
+            this.formElement.appendChild(loadingElement);
+        } else {
+            document.getElementById('loading').remove();
         }
+    }
+
+    async addRepository(event) {
+        event.preventDefault();
+
+        const repoInput = this.inputElement.value;
+
+        if(repoInput.length === 0)
+            return;
+
+        this.setLoading();
         
+        try {
+            const response = await api.get(`/repos/${repoInput}`);
+
+            const { name, description, html_url, owner: { avatar_url } } = response.data;
+    
+            this.repositories.push({
+                name,
+                description,
+                avatar_url,
+                html_url,
+            });
+    
+            this.inputElement.value = '';
+    
+            this.render();
+        } catch (err) {
+            alert('Ops... We could not find the specified repository!');
+        }
+
+        this.setLoading(false);
+    }
+
+    render() {
+        this.listElement.innerHTML = '';
+
+        this.repositories.forEach((repo) => {
+            let imgElement = document.createElement('img');
+            imgElement.setAttribute('src', repo.avatar_url);
+
+            let titleElement = document.createElement('strong');
+            titleElement.appendChild(document.createTextNode(repo.name));
+
+            let descriptionElement = document.createElement('p');
+            descriptionElement.appendChild(document.createTextNode(repo.description));
+
+            let linkElement = document.createElement('a');
+            linkElement.setAttribute('target', '_blank');
+            linkElement.setAttribute('href', repo.html_url);
+            linkElement.appendChild(document.createTextNode('Access'));
+
+            let listElement = document.createElement('li');
+            listElement.appendChild(imgElement);
+            listElement.appendChild(titleElement);
+            listElement.appendChild(descriptionElement);
+            listElement.appendChild(linkElement);
+
+            this.listElement.appendChild(listElement);
+        });
     }
 }
 
-Github.getRepositories('rocketseat/rocketseat.com.br');
-Github.getRepositories('rocketseat/dslkvmskv');
-
-// const searchUser = async (user) => {
-//     axios.get(`https://api.github.com/users/${user}`)
-//         .then(response => {
-//             console.log('Search user...');
-//             console.log(response.data);
-//         })
-//         .catch(err => {
-//             console.log('User could not be found!');
-//         });
-// }
-
-const searchUser = async (user) => {
-    try {
-        const response = await axios.get(`https://api.github.com/users/${user}`)
-        console.log('Search user...');
-        console.log(response.data);
-    } catch(err) {
-        console.log('User could not be found!');
-    }
-}
-
-searchUser('yagosansz');
+new App();

@@ -1,8 +1,11 @@
 module.exports = {
-    entry: './main.js', // what is your main javascript file?
+    entry: './src/main.js', // what is your main javascript file?
     output: { // where should I send my converted ES6+ code?
-        path: __dirname, // refers to the directory where webpack.config.js is located
+        path: __dirname + '/public', // refers to the directory where webpack.config.js is located
         filename: 'bundle.js',
+    },
+    devServer: { 
+        contentBase: __dirname + '/public' // Where should the app server be loaded from?
     },
     module: {
         rules: [

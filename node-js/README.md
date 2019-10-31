@@ -1,13 +1,6 @@
 # Lessons Learned 
 
-## What is an API and NodeJS?
-### API
-- 
-
-#### REST API
--
-
-### NodeJS
+## What NodeJS?
 - It is a platform that uses the V8 Engine (Google Chrome) allowing to use JavaScript on the backend so it is possible to perform requests and act on responses in the server-side.
 
 ## What is Express?
@@ -33,12 +26,19 @@
 - Instead of installing the required software (e.g.: SQL Server, MongoDB) on your host machine, you can do it through a container which is a Virtual Machine that will hold your software's image.
 
 ### Downloading Docker
--  If you have Windows 10 Professional or Enterprise you can download "Docker Desktop" from Docker's wesbite.
+- If you have Windows 10 Professional or Enterprise you can download "Docker Desktop" from Docker's wesbite.
 - Another option is to use a package manager (e.g.: Chocolatey) and download the "Docker Toolbox".
 
 #### Installing Docker Toolbox through Chocolatey
-- Add link to package
-- Talk about extra options, like installing docker-cli and VirtualBox.
+- [Download](https://chocolatey.org/packages/docker-toolbox)
+
+    `choco install docker-toolbox`
+
+- I had difficulties trying to use the Docker Toolbox without having previously installed Kitematic - Docker GUI.
+    - You can also use it run Docker through the Windows Powershell
+- It is also important that you have Oracle VirtualBox installed!
+
+    `choco install docker-toolbox -ia /COMPONENTS="kitematic,virtualbox"`
 
 #### Installing MongoDB
 1 - Donwload MongoDB's image from the Docker's library.
@@ -62,3 +62,5 @@
 - It will encapsulate operations used in a database through JavaScript code.
     - Therefore, instead of queries you only need to use JavaScript code so you can perform operations like SELECT, DELETE, INSERT, etc.
 
+## What is CORS?
+- 

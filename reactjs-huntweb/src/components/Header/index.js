@@ -1,6 +1,12 @@
 import React from 'react';
 
+import './styles.css';
+
 // Stateless Component
 const Header = () => (
-    <h1>Hello World!</h1>
+    <header id="main-header">
+        JSHunt
+    </header>
 );
+
+export default Header;

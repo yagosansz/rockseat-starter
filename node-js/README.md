@@ -63,4 +63,12 @@
     - Therefore, instead of queries you only need to use JavaScript code so you can perform operations like SELECT, DELETE, INSERT, etc.
 
 ## What is CORS?
-- 
+> CORS (Cross-Origin Resource Sharing) is a W3C specification that, when implemented by the browser, allows websites to access resourcers from other websites in different domains.
+
+Browsers use a safety feature called Same-Origin Policy: a resource from a website can only be requested by another website if both websites are under the same domain/address (e.g.: mydomain.com). That restricts REST APIs calls by JavaScript applications hosted in different servers (front-end and back-end are in different layers).
+
+By implementing CORS a domain allows communication with other domains, regardless of the 
+request method (GET, POST, PUT, OR DELETE), as long as the destination domain has specified
+this kind of communication.
+
+[Link to article](https://medium.com/@alexandremjacques/entendendo-o-cors-parte-8331d0a777e1)[PT-BR]
